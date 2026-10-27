@@ -1,0 +1,39 @@
+# Production baseline: EfficientNetV2-S 2.5D slice encoder + study transformer, 3 core series, 384 px.
+data:
+  cache_index: cache/cache_index.parquet
+  label_table: labels/label_table.parquet
+  folds: labels/folds.parquet
+  img_size: 384
+  n_slices: 24
+  n_slices_eval: 32
+  max_series: 3
+  planes: [sagittal, coronal, axial]
+  slice_jitter: 0.15
+  num_workers: 4
+  rare_boost_power: 0.5
+model:
+  backbone: tf_efficientnetv2_s.in21k_ft_in1k
+  pretrained: true
+  checkpoint_path: ""          # set to a local file in the offline Kaggle notebook
+  d_model: 512
+  n_heads: 8
+  series_layers: 2
+  study_layers: 2
+  dropout: 0.1
+  drop_path: 0.1
+  grad_checkpoint: true
+optim:
+  epochs: 8
+  batch_size: 2
+  accum: 4
+  lr_backbone: 1.0e-4
+  lr_head: 3.0e-4
+  weight_decay: 0.02
+  warmup_frac: 0.05
+  grad_clip: 2.0
+  ema_decay: 0.998
+  amp: auto
+  gold_weight: 5.0
+n_folds: 5
+seed: 42
+output_dir: runs/effv2s_384

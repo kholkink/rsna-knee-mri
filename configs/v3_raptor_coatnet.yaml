@@ -1,0 +1,47 @@
+# Raptor-style recipe on cache v2: bag of 2.5D windows from ALL series, 288 px, long schedule, top-3 weight averaging.
+# Train on every non-gold study (validation = 58 gold), selection = last epochs. Two processes = two seeds.
+data:
+  img_size: 384
+  n_slices: 6                 # fallback per-series count when windows_per_study = 0
+  n_slices_eval: 8
+  windows_per_study: 24       # train: 30 windows spread over up to 6 series, proportional to length
+  windows_per_study_eval: 48
+  max_series: 6
+  slice_band: [0.08, 0.92]
+  crop_mm: 140.0
+  canonical: true
+  lat_normalize: true
+  cache_max_slices: 48
+  aug_hflip: 0.0
+  aug_rotate: 6.0
+  aug_scale: [0.94, 1.06]
+  aug_translate: 0.03
+  aug_erase_p: 0.0
+  num_workers: 2
+  rare_boost_power: 0.5
+model:
+  backbone: coatnet_rmlp_2_rw_384.sw_in12k_ft_in1k
+  pretrained: true
+  d_model: 512
+  n_heads: 8
+  series_layers: 1
+  study_layers: 2
+  dropout: 0.15
+  drop_path: 0.15
+  grad_checkpoint: true
+optim:
+  epochs: 16
+  batch_size: 1
+  accum: 8
+  lr_backbone: 3.0e-5
+  lr_head: 5.0e-4
+  weight_decay: 0.03
+  warmup_frac: 0.05
+  grad_clip: 2.0
+  ema_decay: 0.995
+  amp: auto
+  topk_avg: 3
+train_on_all: true
+select_by: last
+n_folds: 5
+output_dir: runs/v3_raptor_coatnet

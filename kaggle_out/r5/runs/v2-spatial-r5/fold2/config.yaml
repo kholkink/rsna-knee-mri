@@ -1,0 +1,74 @@
+data:
+  cache_index: /kaggle/working/cache_index.parquet
+  crop_mm: 140.0
+  canonical: true
+  lat_normalize: true
+  slice_band:
+  - 0.08
+  - 0.92
+  cache_max_slices: 48
+  cache_root: /tmp/rsna/cache
+  label_table: /kaggle/working/label_table.parquet
+  folds: /kaggle/working/folds.parquet
+  img_size: 384
+  n_slices: 16
+  n_slices_eval: 24
+  max_series: 3
+  planes:
+  - sagittal
+  - coronal
+  - axial
+  slice_jitter: 0.15
+  num_workers: 2
+  aug_rotate: 8.0
+  aug_scale:
+  - 0.92
+  - 1.08
+  aug_translate: 0.05
+  aug_hflip: 0.0
+  aug_brightness: 0.15
+  aug_contrast: 0.15
+  aug_gamma:
+  - 0.8
+  - 1.25
+  aug_noise: 0.02
+  aug_erase_p: 0.2
+  rare_boost_power: 0.5
+model:
+  backbone: tf_efficientnetv2_s.in21k_ft_in1k
+  pretrained: true
+  checkpoint_path: ''
+  feature_dim: 0
+  d_model: 512
+  n_heads: 8
+  series_layers: 2
+  study_layers: 2
+  dropout: 0.1
+  drop_path: 0.1
+  grad_checkpoint: true
+  channels_last: true
+  spatial_head: true
+  spatial_dim: 256
+optim:
+  epochs: 6
+  batch_size: 2
+  accum: 4
+  lr_backbone: 0.0001
+  lr_head: 0.0003
+  weight_decay: 0.02
+  warmup_frac: 0.05
+  grad_clip: 2.0
+  ema_decay: 0.99
+  amp: auto
+  label_smoothing: 0.0
+  gold_weight: 5.0
+fold: 2
+n_folds: 5
+seed: 42
+output_dir: /kaggle/working/runs/v2-spatial-r5
+resume: true
+wandb_project: ''
+compile: false
+eval_every: 1
+max_train_studies: 0
+max_hours: 6.544660770164596

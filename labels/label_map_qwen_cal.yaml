@@ -1,0 +1,37 @@
+absent: 0.0
+below_value: 0.35
+conditional_prior:
+  synovitis:
+  - effusion
+  - 0.45
+equivocal: 0.5
+equivocal_by_label:
+  bakers_cyst: 0.3
+  effusion: 0.3
+  fracture: 0.7
+  mcl: 0.3
+  medial_oa: 0.3
+  patellofemoral_oa: 0.3
+min_severity:
+  bakers_cyst: moderate
+  effusion: moderate
+  fracture: moderate
+  mcl: moderate
+  medial_oa: moderate
+  patellofemoral_oa: moderate
+not_mentioned: 0.05
+not_mentioned_by_label:
+  bakers_cyst: 0.02
+  effusion: 0.02
+  fracture: 0.12
+  lateral_oa: 0.08
+  mcl: 0.02
+  medial_oa: 0.02
+  patellofemoral_oa: 0.12
+  synovitis: 0.08
+present: 1.0
+w_absent: 1.0
+w_equivocal: 0.5
+w_gold: 5.0
+w_not_mentioned: 0.4
+w_present: 1.0

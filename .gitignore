@@ -1,0 +1,73 @@
+# --- Python / tooling -------------------------------------------------------
+.venv/
+/venv/
+/env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+wandb/
+
+# --- Secrets ------------------------------------------------------------------
+.env
+.env.*
+kaggle.json
+access_token
+
+# --- Local work dirs (competition data, caches, kernel builds, runs) ----------
+# Anchored to the repo root: the package itself has an rsna_knee/data/ module.
+/data/
+/build/
+/cache/
+/features/
+/wheels/
+runs/
+
+# --- Competition data and anything derived from it per study/image -----------
+# (Kaggle competition data licence: DICOM, reports, labels, folds, caches, OOF and
+#  submission files are never published.)
+*.dcm
+*.npz
+*.parquet
+submission*.csv
+
+# --- Model weights and large binaries ----------------------------------------
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.sqlite*
+*.log
+
+# --- Windows / WSL junk -------------------------------------------------------
+*:Zone.Identifier
+Thumbs.db
+.DS_Store
+
+# --- labels/: keep only the extraction guide and small calibration summaries --
+labels/**
+!labels/**/
+!labels/agent/LABELLING_GUIDE.md
+!labels/label_map_qwen_cal.yaml
+!labels/grade_calibration_v4.json
+
+# --- kaggle_out/: keep only per-epoch metric histories and run configs --------
+# (logs embed code snapshots and study UIDs; extractions quote report text;
+#  submissions, OOF and label tables are per-study.)
+kaggle_out/**
+!kaggle_out/**/
+!kaggle_out/**/history.jsonl
+!kaggle_out/**/config.yaml
+!kaggle_out/extract/gold_agreement.csv
+kaggle_out/smoke/

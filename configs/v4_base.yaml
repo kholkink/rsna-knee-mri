@@ -1,0 +1,49 @@
+# ABLATION BASELINE (protocol: one change at a time, compare `confident` AUC on the held-out fold; differences < 0.003 are noise).
+# Simple per-finding attention head (no transformers), flat bag of windows over all series, severity-graded label blend v3.
+# val = fold 3 (941 studies, report labels) + all 58 gold (expert labels); gold never trains.
+data:
+  img_size: 288
+  n_slices: 6
+  n_slices_eval: 8
+  windows_per_study: 30
+  windows_per_study_eval: 48
+  max_series: 6
+  slice_band: [0.08, 0.92]
+  crop_mm: 140.0
+  canonical: true
+  lat_normalize: true
+  cache_max_slices: 48
+  aug_hflip: 0.0
+  aug_rotate: 6.0
+  aug_scale: [0.94, 1.06]
+  aug_translate: 0.03
+  aug_erase_p: 0.0
+  num_workers: 2
+  rare_boost_power: 0.5
+model:
+  backbone: tf_efficientnetv2_s.in21k_ft_in1k
+  pretrained: true
+  d_model: 512
+  n_heads: 8
+  series_layers: 0
+  study_layers: 0
+  dropout: 0.15
+  drop_path: 0.15
+  grad_checkpoint: true
+optim:
+  epochs: 10
+  batch_size: 2
+  accum: 4
+  lr_backbone: 6.0e-5
+  lr_head: 5.0e-4
+  weight_decay: 0.03
+  warmup_frac: 0.05
+  grad_clip: 2.0
+  ema_decay: 0.995
+  amp: auto
+  topk_avg: 0
+gold_holdout: true
+select_by: confident
+fold: 3
+n_folds: 5
+output_dir: runs/v4_base

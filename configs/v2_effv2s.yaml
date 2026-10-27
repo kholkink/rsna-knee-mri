@@ -1,0 +1,38 @@
+# Round 4+: cache v2 (140 mm centre crop, canonical orientation, right knees mirrored onto left), LLM-blend labels.
+data:
+  img_size: 384
+  n_slices: 20
+  n_slices_eval: 24
+  max_series: 3
+  slice_band: [0.08, 0.92]
+  crop_mm: 140.0
+  canonical: true
+  lat_normalize: true
+  cache_max_slices: 48
+  aug_hflip: 0.0            # laterality is normalised: a flip would swap medial and lateral
+  aug_rotate: 8.0
+  aug_scale: [0.92, 1.08]
+  num_workers: 2
+  rare_boost_power: 0.5
+model:
+  backbone: tf_efficientnetv2_s.in21k_ft_in1k
+  pretrained: true
+  d_model: 512
+  n_heads: 8
+  series_layers: 2
+  study_layers: 2
+  dropout: 0.1
+  drop_path: 0.1
+  grad_checkpoint: true
+optim:
+  epochs: 8
+  batch_size: 2
+  accum: 4
+  lr_backbone: 1.0e-4
+  lr_head: 3.0e-4
+  weight_decay: 0.02
+  warmup_frac: 0.05
+  ema_decay: 0.99
+  amp: auto
+n_folds: 5
+output_dir: runs/v2_effv2s

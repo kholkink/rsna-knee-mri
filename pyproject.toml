@@ -1,0 +1,41 @@
+[project]
+name = "rsna-knee"
+version = "0.1.0"
+description = "RSNA 2026 Knee Abnormality Detection: weak-label extraction from multilingual reports + hierarchical 2.5D study transformer"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "pyarrow>=14",
+  "scikit-learn>=1.4",
+  "opencv-python-headless>=4.9",
+  "pydicom>=3.0",
+  "pylibjpeg>=2.0",
+  "pylibjpeg-libjpeg",
+  "pylibjpeg-openjpeg",
+  "torch>=2.2",
+  "torchvision",
+  "timm>=1.0.15",
+  "pydantic>=2.5",
+  "tqdm",
+  "pyyaml",
+]
+
+[project.optional-dependencies]
+llm = ["anthropic>=1.0", "openai>=1.30"]
+dev = ["pytest", "ruff"]
+track = ["wandb"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["rsna_knee*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

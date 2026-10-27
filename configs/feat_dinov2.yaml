@@ -1,0 +1,27 @@
+# Fast path: frozen DINOv2-B features (scripts/extract_features.py) -> train only the study transformer (minutes / fold).
+data:
+  cache_index: features/dinov2b/feature_index.parquet
+  label_table: labels/label_table.parquet
+  folds: labels/folds.parquet
+  n_slices: 24
+  n_slices_eval: 32
+  max_series: 3
+  num_workers: 4
+  aug_erase_p: 0.0
+model:
+  feature_dim: 768
+  d_model: 384
+  n_heads: 8
+  series_layers: 2
+  study_layers: 2
+  dropout: 0.2
+optim:
+  epochs: 30
+  batch_size: 16
+  accum: 1
+  lr_head: 3.0e-4
+  weight_decay: 0.05
+  warmup_frac: 0.05
+  ema_decay: 0.99
+  amp: off
+output_dir: runs/feat_dinov2b
